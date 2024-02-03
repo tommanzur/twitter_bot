@@ -1,3 +1,4 @@
+import os
 import time
 from utils.text_synthesizer import TextSynthesizer
 from utils.twitter_client import TwitterClient
@@ -10,9 +11,8 @@ from utils.scraper_infobae import InfobaeScraper
 from utils.scraper_laizquierda import LaIzquierdaDiarioScraper
 from utils import credentials
 
-
 class NewsManager:
-    """Class for manage the full proces"""
+    """Class for manage the full process"""
 
     def __init__(self):
         self.twitter_client = TwitterClient(
@@ -52,7 +52,7 @@ class NewsManager:
             text, link = news_article[3], news_article[1]
             self.twitter_client.post_tweet(text, link)
 
-    def post_multiple_tweets(self, total_tweets, intervals=64):
+    def post_multiple_tweets(self, total_tweets, intervals=int(os.getenv('INTERVVALO', 10))):
         """Post multiple tweets with intervals"""
         for _ in range(total_tweets):
             self.post_random_tweet()
@@ -62,9 +62,11 @@ class NewsManager:
         """Main method to run the news manager"""
         self.news_db.create_table()
         self.process_news_articles()
-        self.post_multiple_tweets(5)
+        num_tweets = int(os.getenv('NUM_TWEETS', 5))
+        self.post_multiple_tweets(num_tweets)
         self.news_db.delete_database()
 
 if __name__ == "__main__":
     manager = NewsManager()
     manager.run()
+

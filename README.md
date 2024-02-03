@@ -27,13 +27,14 @@ Las dependencias incluyen requests, bs4, tweepy y google-generativeai.
     - Clave de la API de GenerativeAI de Google (GOOGLE_API_KEY).
 
 
-## Uso
-- Una vez configuradas las credenciales debes correr el script: ```python twitter_bot.py```
-- Inicialización de la Base de Datos: El script creará automáticamente una base de datos SQLite (news.db) para almacenar artículos de noticias.
-- Scraping de Noticias: El script raspa los últimos artículos de noticias de las fuentes especificadas.
-- Resumen de Artículos: El contenido de cada artículo se resume utilizando la API de Gemini.
-- Publicación de Tweets: El script publica tuits con resúmenes y enlaces a los artículos completos.
-- Operación Continua: El script se ejecuta en un bucle, publicando un tuit aleatorio cada cierto tiempo definido por el usuario.
+## Ejecución del Script
+Para ejecutar el script, utiliza el siguiente comando, donde NUM_TWEETS es la cantidad de tweets que deseas publicar e INTERVVALO es el tiempo entre la publicación de cada tweet. Por ejemplo, para publicar 10 tweets, el comando sería:
+
+```bash
+NUM_TWEETS=10 INTERVVALO=15 python twitter_bot.py
+```
+Si no se especifica NUM_TWEETS, el script utilizará un valor predeterminado de 5 tweets.
+Si no se especifica INTERVVALO, el script utilizará un valor predeterminado de 10 segundos.
 
 ## Contribuciones
 

@@ -37,9 +37,18 @@ def create_database():
     """
     conn = sqlite3.connect('news.db')
     c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS news (title TEXT, link TEXT, content TEXT)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS news (title TEXT, link TEXT, content TEXT, summary TEXT)''')
     conn.commit()
     conn.close()
+
+def delete_database():
+    """
+    Deletes the SQLite database.
+    """
+    try:
+        os.remove('news.db')
+    except OSError as e:
+        print(f"Error deleting database: {e}")
 
 def insert_news_into_db(news):
     """
@@ -48,8 +57,8 @@ def insert_news_into_db(news):
     conn = sqlite3.connect('news.db')
     c = conn.cursor()
     for article in news:
-        c.execute("INSERT INTO news (title, link, content) VALUES (?, ?, ?)", 
-                  (article['title'], article['link'], article['content']))
+        c.execute("INSERT INTO news (title, link, content, summary) VALUES (?, ?, ?, ?)", 
+                  (article['title'], article['link'], article['content'], article['summary']))
     conn.commit()
     conn.close()
 
@@ -155,7 +164,9 @@ def select_random_news():
     c.execute("SELECT * FROM news ORDER BY RANDOM() LIMIT 1")
     news_article = c.fetchone()
     if news_article:
-        c.execute("DELETE FROM news WHERE title = ? AND link = ?", (news_article[0], news_article[1]))
+        c.execute(
+            "DELETE FROM news WHERE title = ? AND link = ?", (news_article[0], news_article[1])
+            )
     conn.commit()
     conn.close()
     return news_article
@@ -165,21 +176,39 @@ def synthesize_text(text):
     Synthesizes a summary of the given text using the Gemini API.
     """
     instructions = (
-        "Resume en una oración los aspectos más importantes de esta noticia, "
-        "con un lenguaje coloquial, como si fueras argentino, "
-        "no seas redundante, y ten en cuenta que el resultado "
-        "debe ser lo suficientemente escueto como para publicarlo en un tweet. "
-        "Agrega al final una serie de hashtags que tengan que ver con la noticia "
-        "(al menos 5). "
-        "Todo el texto (hashtags y link incluido) no deben superar los 280 caradcteres."
+        "Crea un resumen en dos oraciones, ingenioso y atractivo en estilo argentino para la noticia que te presento a continuación. Incluye al menos 4 hashtags relevantes al final del resumen. "
+        "El resumen debe ser conciso y llamativo, con un límite máximo de 280 caracteres y mínimo fe 160, para dejar espacio para el enlace del tweet. Noticia:"
     )
-    
+ 
     text_with_instructions = instructions + text
     response = model.generate_content(text_with_instructions)
     try:
         return response.text
     except:
-        return response.part[0]
+        pass
+
+def process_news_articles():
+    """
+    Collects news articles from various sources, synthesizes summaries,
+    and updates the database accordingly.
+    """
+    news = []
+    news.extend(get_ambito_news())
+    news.extend(get_p12_news())
+    news.extend(get_lpo_news())
+
+    for article in news:
+        art_summary = synthesize_text(article.get('content'))
+        if art_summary:
+            article['summary'] = art_summary
+        else:
+            conn = sqlite3.connect('news.db')
+            c = conn.cursor()
+            c.execute("DELETE FROM news WHERE title = ?", (article['title'],))
+            conn.commit()
+            conn.close()
+
+    return news_articles
 
 def post_random_tweet():
     """
@@ -187,7 +216,7 @@ def post_random_tweet():
     """
     news_article = select_random_news()
     if news_article:
-        text, link = news_article[0], news_article[1]
+        text, link = news_article[3], news_article[1]
         try:
             tweet = f"{text} {link}"
             response = client.create_tweet(text=tweet)
@@ -195,21 +224,17 @@ def post_random_tweet():
         except Exception as e:
             print(f"Error posting tweet: {e}")
 
+def post_multiple_tweets(total_tweets):
+    """
+    Posts multiple random tweets, waiting for a specified interval between each tweet.
+    :param total_tweets: The total number of tweets to post.
+    """
+    for i in range(total_tweets):
+        post_random_tweet()
+        time.sleep(73)
+
 create_database()
-
-news_articles = []
-news_articles.extend(get_ambito_news())
-news_articles.extend(get_p12_news())
-news_articles.extend(get_lpo_news())
-
-# Process each news article for summary
-for article in news_articles:
-    article['summary'] = synthesize_text(article['content'])
-
-# Insert news into the database
+news_articles = process_news_articles()
 insert_news_into_db(news_articles)
-
-# Loop to post tweets every minute
-while True:
-    post_random_tweet()
-    time.sleep(60)
+post_multiple_tweets(5)
+delete_database()

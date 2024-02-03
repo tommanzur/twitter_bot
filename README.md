@@ -36,6 +36,40 @@ NUM_TWEETS=10 INTERVVALO=15 python twitter_bot.py
 Si no se especifica ```NUM_TWEETS```, el script utilizará un valor predeterminado de 5 tweets.
 Si no se especifica ```INTERVVALO```, el script utilizará un valor predeterminado de 10 segundos.
 
+## Automatización con Cron
+
+Puedes automatizar la ejecución del script twitter_bot.py utilizando cron, un programador de tareas en sistemas Unix. Esto te permitirá ejecutar el script a intervalos regulares (por ejemplo, cada hora o una vez al día) sin intervención manual.
+
+### Configuración de Cron
+Abrir Crontab: Abre el editor de crontab para tu usuario ejecutando el siguiente comando en la terminal:
+```bash
+crontab -e
+```
+Esto abrirá el archivo crontab en tu editor de texto predeterminado.
+Agregar una Nueva Tarea Cron: Agrega una línea al final del archivo crontab siguiendo la sintaxis de cron. Por ejemplo, para ejecutar el script cada hora, puedes agregar:
+```cron
+0 * * * * /usr/bin/python /ruta/a/tu/script/twitter_bot.py
+```
+Asegúrate de reemplazar /usr/bin/python con la ruta completa a tu intérprete de Python y /ruta/a/tu/script/twitter_bot.py con la ruta completa al script twitter_bot.py.
+Establecer la Variable de Entorno: Si deseas especificar un número de tweets diferente al valor predeterminado, puedes agregar la variable NUM_TWEETS directamente en la entrada de cron:
+```cron
+0 * * * * NUM_TWEETS=10 /usr/bin/python /ruta/a/tu/script/twitter_bot.py
+```
+Esto ejecutará el script cada hora y publicará 10 tweets en cada ejecución.
+Guardar y Salir: Guarda los cambios y cierra el editor. cron se actualizará automáticamente con la nueva tarea.
+
+### Verificación
+Verificar Tareas de Cron: Para verificar que tu tarea se ha añadido correctamente, ejecuta:
+```bash
+crontab -l
+```
+Esto listará todas las tareas de cron programadas para tu usuario.
+- Logs de Cron: Puedes revisar los logs de cron para verificar que la tarea se está ejecutando según lo previsto. La ubicación y el acceso a los logs de cron pueden variar según tu sistema.
+Consideraciones
+- Ruta de Trabajo: cron ejecuta el script en tu directorio personal por defecto, a menos que especifiques otra ruta. Si tu script depende de ejecutarse en un directorio específico, considera agregar un comando cd a tu tarea cron.
+- Permisos: Asegúrate de que el script tenga los permisos necesarios para ejecutarse.
+- Entorno de Ejecución: cron puede tener un entorno diferente al de tu sesión de usuario habitual. Si el script depende de variables de entorno o configuraciones específicas de tu usuario, asegúrate de que estén disponibles o definidas en el contexto de cron.
+
 ## Contribuciones
 
 Se bienvenidas las contribuciones, problemas y solicitudes de características. No dudes en consultar la página de problemas para problemas abiertos o abrir un nuevo problema para discutir cambios o características que te gustaría agregar.

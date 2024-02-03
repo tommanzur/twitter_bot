@@ -7,6 +7,9 @@ class LaPoliticaOnlineScraper(NewsScraper):
     """
 
     def scrape_news(self):
+        """
+        Method to scrape news from 'LPO'.
+        """
         soup = self._get_soup(self.base_url)
         if not soup:
             return []

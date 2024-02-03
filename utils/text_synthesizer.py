@@ -66,6 +66,7 @@ class TextSynthesizer:
         instructions = (
             "Crea un resumen en dos oraciones, ingenioso y atractivo "
             "en estilo argentino para la noticia que te presento a continuación. "
+            "Utiliza un estilo de escritura irónico y canchero. "
             "Incluye al menos 4 hashtags relevantes al final del resumen. "
             "El resumen debe ser conciso y llamativo, con un límite máximo "
             "de 280 caracteres y mínimo de 160, para dejar espacio para el enlace del tweet. "
@@ -76,5 +77,5 @@ class TextSynthesizer:
         response = self.model.generate_content(text_with_instructions)
         try:
             return response.text
-        except AttributeError:
+        except:
             return None

@@ -1,27 +1,26 @@
 from utils.news_scraper import NewsScraper
 
 
-class AmbitoScraper(NewsScraper):
+class ElDestapeWebScraper(NewsScraper):
     """
-    Scraper for 'Ambito' news.
+    Scraper for 'El Destape' news.
     """
 
     def scrape_news(self):
         """
-        Method to scrape news from 'Ambito'.
+        Method to scrape news from 'El Destape Web'.
         """
         soup = self._get_soup(self.base_url)
         if not soup:
             return []
 
         news = []
-        for article in soup.find('div', class_='top-ranked-news').find_all(
-            'article', class_='top-ranked-news__news-article'
-            )[:5]:
-            title_tag = article.find('h2', class_='top-ranked-news__news-article-title')
+        for div in soup.find_all('div', class_='titulo')[:5]:
+            title_tag = div.find('h2')
             if title_tag:
                 title = title_tag.get_text(strip=True)
-                link = title_tag.find('a')['href']
+                link = self.base_url + title_tag.find('a')['href']
                 content = self._scrape_article_content(link)
                 news.append({'title': title, 'link': link, 'content': content})
+
         return news

@@ -8,7 +8,7 @@ class Pagina12Scraper(NewsScraper):
 
     def scrape_news(self):
         """
-        Method to scrape news.
+        Method to scrape news from 'Pagina 12'.
         """
         soup = self._get_soup(self.base_url)
         if not soup:

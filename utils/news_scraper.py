@@ -42,7 +42,14 @@ class NewsScraper(ABC):
             if not soup:
                 return 'Content not found.'
 
-            selectors = ['.body.vsmcontent', '.col-12.col-md-8.detail-news__main-column', '.article-main-content.article-text']
+            selectors = [
+                '.body.vsmcontent',
+                '.col-12.col-md-8.detail-news__main-column',
+                '.article-main-content.article-text',
+                '[itemprop="articleBody"]',
+                'div.body-article',
+                '.articulo'
+            ]
             content = None
 
             for selector in selectors:

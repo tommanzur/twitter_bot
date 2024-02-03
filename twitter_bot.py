@@ -5,6 +5,9 @@ from utils.news_database import NewsDatabase
 from utils.scraper_lpo import LaPoliticaOnlineScraper
 from utils.scraper_ambito import AmbitoScraper
 from utils.scraper_pagina12 import Pagina12Scraper
+from utils.scraper_destape import ElDestapeWebScraper
+from utils.scraper_infobae import InfobaeScraper
+from utils.scraper_laizquierda import LaIzquierdaDiarioScraper
 from utils import credentials
 
 
@@ -24,7 +27,10 @@ class NewsManager:
         self.scrapers = [
             LaPoliticaOnlineScraper("https://www.lapoliticaonline.com"),
             AmbitoScraper('https://www.ambito.com'),
-            Pagina12Scraper('https://www.pagina12.com.ar')
+            Pagina12Scraper('https://www.pagina12.com.ar'),
+            ElDestapeWebScraper('https://www.eldestapeweb.com'),
+            InfobaeScraper("https://www.infobae.com"),
+            LaIzquierdaDiarioScraper('https://www.laizquierdadiario.com/')
             ]
 
     def process_news_articles(self):
@@ -59,7 +65,6 @@ class NewsManager:
         self.post_multiple_tweets(5)
         self.news_db.delete_database()
 
-# Example usage
 if __name__ == "__main__":
     manager = NewsManager()
     manager.run()

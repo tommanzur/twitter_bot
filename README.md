@@ -22,19 +22,19 @@ pip install -p requirements.txt
 Las dependencias incluyen requests, bs4, tweepy y google-generativeai.
 
 2. Configuración de Credenciales:
-- Completar el archivo utils.credentials.py con las claves API necesarias:
-    - Credenciales de Twitter (API_KEY, API_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET, BEARER_TOKEN).
-    - Clave de la API de GenerativeAI de Google (GOOGLE_API_KEY).
+- Completar el archivo ```utils.credentials.py``` con las claves API necesarias:
+    - Credenciales de Twitter (```API_KEY```, ```API_SECRET```, ```ACCESS_TOKEN```, ```ACCESS_TOKEN_SECRET```, ```BEARER_TOKEN```).
+    - Clave de la API de GenerativeAI de Google (```GOOGLE_API_KEY```).
 
 
 ## Ejecución del Script
-Para ejecutar el script, utiliza el siguiente comando, donde NUM_TWEETS es la cantidad de tweets que deseas publicar e INTERVVALO es el tiempo entre la publicación de cada tweet. Por ejemplo, para publicar 10 tweets, el comando sería:
+Para ejecutar el script, utiliza el siguiente comando, donde ```NUM_TWEETS``` es la cantidad de tweets que deseas publicar e ```INTERVALO``` es el tiempo entre la publicación de cada tweet. Por ejemplo, para publicar 10 tweets, el comando sería:
 
 ```bash
 NUM_TWEETS=10 INTERVVALO=15 python twitter_bot.py
 ```
-Si no se especifica NUM_TWEETS, el script utilizará un valor predeterminado de 5 tweets.
-Si no se especifica INTERVVALO, el script utilizará un valor predeterminado de 10 segundos.
+Si no se especifica ```NUM_TWEETS```, el script utilizará un valor predeterminado de 5 tweets.
+Si no se especifica ```INTERVVALO```, el script utilizará un valor predeterminado de 10 segundos.
 
 ## Contribuciones
 

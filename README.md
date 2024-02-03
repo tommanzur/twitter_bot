@@ -6,35 +6,34 @@ Este repositorio contiene el código para un Bot de Tweets de Noticias, diseñad
 
 ## Características
 
-- Scraping de Noticias: Extrae artículos de 'La Política Online', 'Ámbito' y 'Página 12'.
-- Gestión de Bases de Datos: Almacena y gestiona los artículos de noticias raspados en una base de datos SQLite.
-- Síntesis de Texto: Resume artículos de noticias utilizando la API de Gemini de Google.
-- Tuitear: Publica tuits de resúmenes de noticias con enlaces a los artículos originales.
-- Tuiteo Automatizado: Tuitea un resumen de noticias aleatorio cada minuto.
+- Scraping de Noticias: El bot puede extraer artículos de periódicos online como 'La Política Online', 'Ámbito Financiero' y 'Página 12'.
+- Gestión de Bases de Datos: Utiliza SQLite para almacenar y gestionar los artículos extraídos.
+- Síntesis de Texto: Emplea la API de GenerativeAI de Google para resumir los artículos de noticias.
+- Publicación Automatizada en Twitter: Publica tweets con resúmenes y enlaces a los artículos originales.
+Operación Continua: Configurado para publicar tweets de manera automática en intervalos regulares.
 
 ## Instalación
 
-Para ejecutar este proyecto, necesitas instalar el archivo requirements.txt
+1. Instalación de Dependencias:
 
 ```bash
 pip install -p requirements.txt
 ```
+Las dependencias incluyen requests, bs4, tweepy y google-generativeai.
 
-## Configuración
+2. Configuración de Credenciales:
+- Completar el archivo utils.credentials.py con las claves API necesarias:
+    - Credenciales de Twitter (API_KEY, API_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET, BEARER_TOKEN).
+    - Clave de la API de GenerativeAI de Google (GOOGLE_API_KEY).
 
-Antes de ejecutar el script, necesitas configurar las siguientes claves API:
-
-- Credenciales de la API de Twitter: API_KEY, API_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET, BEARER_TOKEN
-- Clave de la IA Generativa de Google (API de Gemini): GOOGLE_API_KEY
-Estas claves deben introducirse en las respectivas variables dentro del script.
 
 ## Uso
-- Una vez configuradas las credenciales debes correr el script: ```python bot.py```
+- Una vez configuradas las credenciales debes correr el script: ```python twitter_bot.py```
 - Inicialización de la Base de Datos: El script creará automáticamente una base de datos SQLite (news.db) para almacenar artículos de noticias.
 - Scraping de Noticias: El script raspa los últimos artículos de noticias de las fuentes especificadas.
 - Resumen de Artículos: El contenido de cada artículo se resume utilizando la API de Gemini.
 - Publicación de Tweets: El script publica tuits con resúmenes y enlaces a los artículos completos.
-- Operación Continua: El script se ejecuta en un bucle, publicando un tuit aleatorio cada minuto.
+- Operación Continua: El script se ejecuta en un bucle, publicando un tuit aleatorio cada cierto tiempo definido por el usuario.
 
 ## Contribuciones
 

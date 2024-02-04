@@ -36,6 +36,8 @@ NUM_TWEETS=10 INTERVALO=15 python twitter_bot.py
 Si no se especifica ```NUM_TWEETS```, el script utilizará un valor predeterminado de 5 tweets.
 Si no se especifica ```INTERVALO```, el script utilizará un valor predeterminado de 10 segundos.
 
+![Twitter bot console](./preview.png)
+
 ## Automatización con Cron
 
 Puedes automatizar la ejecución del script twitter_bot.py utilizando cron, un programador de tareas en sistemas Unix. Esto te permitirá ejecutar el script a intervalos regulares (por ejemplo, cada hora o una vez al día) sin intervención manual.

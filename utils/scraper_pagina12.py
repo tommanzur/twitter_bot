@@ -21,5 +21,7 @@ class Pagina12Scraper(NewsScraper):
                 title = title_tag.get_text(strip=True)
                 link = title_tag.a['href']
                 content = self._scrape_article_content(link)
-                news.append({'title': title, 'link': link, 'content': content})
+                if title and link and content:
+                    news.append({'title': title, 'link': link, 'content': content})
+
         return news

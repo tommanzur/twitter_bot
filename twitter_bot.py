@@ -39,18 +39,15 @@ class NewsManager:
         for scraper in self.scrapers:
             recent_articles.extend(scraper.scrape_news())
             for article in recent_articles:
-                content = article['content']
-                if content:
-                    summary = self.text_synthesizer.synthesize_text(content)
-                    article['summary'] = summary
-                    self.news_db.insert_news(article)
+                self.news_db.insert_news(article)
 
     def post_random_tweet(self):
         """Post a random tweet"""
         news_article = self.news_db.select_random_news()
         if news_article:
-            text, link = news_article[3], news_article[1]
-            self.twitter_client.post_tweet(text, link)
+            summary = self.text_synthesizer.synthesize_text(news_article[2])
+            link = news_article[1]
+            self.twitter_client.post_tweet(summary, link)
 
     def post_multiple_tweets(self, total_tweets, intervals=int(os.getenv('INTERVALO', 10))):
         """Post multiple tweets with intervals"""
@@ -60,11 +57,21 @@ class NewsManager:
 
     def run(self):
         """Main method to run the news manager"""
+        print("Creando base de datos...")
         self.news_db.create_table()
+        print("Base de datos creada.")
+
+        print("Procesando nuevos artículos...")
         self.process_news_articles()
+        print("Nuevos artículos procesados.")
+
+        print("Posteando nuevos tweets...")
         num_tweets = int(os.getenv('NUM_TWEETS', 5))
         self.post_multiple_tweets(num_tweets)
+
+        print("Eliminando base de datos...")
         self.news_db.delete_database()
+        print("Base de datos eliminada. Proceso completado.")
 
 if __name__ == "__main__":
     manager = NewsManager()

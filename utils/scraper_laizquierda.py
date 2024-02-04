@@ -21,6 +21,7 @@ class LaIzquierdaDiarioScraper(NewsScraper):
                 title = title_tag.get_text(strip=True)
                 link = link_tag['href']
                 content = self._scrape_article_content(self.base_url + link)
-                news.append({'title': title, 'link': link, 'content': content})
+                if title and link and content:
+                    news.append({'title': title, 'link': link, 'content': content})
 
         return news

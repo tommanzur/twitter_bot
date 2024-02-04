@@ -43,8 +43,8 @@ class NewsDatabase:
         """
         self.connect()
         c = self.conn.cursor()
-        c.execute("INSERT INTO news (title, link, content, summary) VALUES (?, ?, ?, ?)", 
-                      (article['title'], article['link'], article['content'], article['summary']))
+        c.execute("INSERT INTO news (title, link, content) VALUES (?, ?, ?)", 
+                      (article['title'], article['link'], article['content']))
         self.conn.commit()
         self.close()
 

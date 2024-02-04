@@ -31,10 +31,10 @@ Las dependencias incluyen requests, bs4, tweepy y google-generativeai.
 Para ejecutar el script, utiliza el siguiente comando, donde ```NUM_TWEETS``` es la cantidad de tweets que deseas publicar e ```INTERVALO``` es el tiempo entre la publicación de cada tweet. Por ejemplo, para publicar 10 tweets, el comando sería:
 
 ```bash
-NUM_TWEETS=10 INTERVVALO=15 python twitter_bot.py
+NUM_TWEETS=10 INTERVALO=15 python twitter_bot.py
 ```
 Si no se especifica ```NUM_TWEETS```, el script utilizará un valor predeterminado de 5 tweets.
-Si no se especifica ```INTERVVALO```, el script utilizará un valor predeterminado de 10 segundos.
+Si no se especifica ```INTERVALO```, el script utilizará un valor predeterminado de 10 segundos.
 
 ## Automatización con Cron
 

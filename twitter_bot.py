@@ -52,7 +52,7 @@ class NewsManager:
             text, link = news_article[3], news_article[1]
             self.twitter_client.post_tweet(text, link)
 
-    def post_multiple_tweets(self, total_tweets, intervals=int(os.getenv('INTERVVALO', 10))):
+    def post_multiple_tweets(self, total_tweets, intervals=int(os.getenv('INTERVALO', 10))):
         """Post multiple tweets with intervals"""
         for _ in range(total_tweets):
             self.post_random_tweet()

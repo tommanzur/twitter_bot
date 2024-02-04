@@ -64,12 +64,14 @@ class TextSynthesizer:
             str or None: The synthesized text summary or None if synthesis fails.
         """
         instructions = (
-            "Crea un resumen en dos oraciones, ingenioso y atractivo "
+            "Crea un mensaje de twitter ingenioso y atractivo "
             "en estilo argentino para la noticia que te presento a continuación. "
-            "Utiliza un estilo de escritura irónico y canchero. "
-            "Incluye al menos 4 hashtags relevantes al final del resumen. "
-            "El resumen debe ser conciso y llamativo, con un límite máximo "
-            "de 280 caracteres y mínimo de 160, para dejar espacio para el enlace del tweet. "
+            "Utiliza un estilo de escritura irónico, sobrador y canchero. "
+            "Como de alguien que se las sabe todas y desprecia"
+            " las ideas de derecha en general. "
+            "Incluye al menos 4 hashtags relevantes al final del mensaje. "
+            "El mensaje debe ser conciso y llamativo, con un límite máximo "
+            "de 280 caracteres incluyendo los hashtags. "
             "Noticia: "
         )
 

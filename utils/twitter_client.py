@@ -32,7 +32,7 @@ class TwitterClient:
         )
         self.news_db = NewsDatabase()
 
-    def post_tweet(self, text, link):
+    def post_tweet_with_link(self, text, link):
         """
         Posts a tweet with the given text.
 
@@ -45,6 +45,24 @@ class TwitterClient:
         """
         try:
             tweet = f"{text} {link}"
+            response = self.client.create_tweet(text=tweet)
+            print(f"Tweet published: {response.data['id']}")
+        except Exception as e:
+            print(f"Error posting tweet: {e}")
+
+    def post_tweet(self, text):
+        """
+        Posts a tweet with the given text.
+
+        Args:
+            text (str): The text to be posted as a tweet.
+
+        Returns:
+            tweepy.Response: The response object from Tweepy
+            if the tweet is successfully posted, None otherwise.
+        """
+        try:
+            tweet = f"{text}"
             response = self.client.create_tweet(text=tweet)
             print(f"Tweet published: {response.data['id']}")
         except Exception as e:

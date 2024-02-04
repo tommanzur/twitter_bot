@@ -1,4 +1,5 @@
 import os
+import random
 import time
 from utils.text_synthesizer import TextSynthesizer
 from utils.twitter_client import TwitterClient
@@ -41,13 +42,23 @@ class NewsManager:
             for article in recent_articles:
                 self.news_db.insert_news(article)
 
-    def post_random_tweet(self):
-        """Post a random tweet"""
+    def post_random_tweet(self, attempt=0):
+        """Post a random tweet."""
+        max_attempts = 5
+        if attempt > max_attempts:
+            return
         news_article = self.news_db.select_random_news()
         if news_article:
             summary = self.text_synthesizer.synthesize_text(news_article[2])
             link = news_article[1]
-            self.twitter_client.post_tweet(summary, link)
+            if len(summary) < 280:
+                tweet_method = random.choice([
+                    lambda: self.twitter_client.post_tweet_with_link(summary, link),
+                    lambda: self.twitter_client.post_tweet(summary)
+                ])
+                tweet_method()
+            else:
+                self.post_random_tweet(attempt + 1)
 
     def post_multiple_tweets(self, total_tweets, intervals=int(os.getenv('INTERVALO', 10))):
         """Post multiple tweets with intervals"""

@@ -2,14 +2,14 @@
 
 ## Resumen del Proyecto
 
-Este repositorio contiene el código para un Bot de Tweets de Noticias, diseñado para scrapear automáticamente, resumir y tuitear artículos de noticias argentinas de diversas fuentes. Utiliza bibliotecas de Python como Tweepy, BeautifulSoup, Requests y la IA Generativa de Google (API de Gemini) para realizar tareas como raspado web, gestión de bases de datos, síntesis de texto y tuiteo.
+Este repositorio contiene el código para un Bot de Tweets de Noticias, diseñado para scrapear automáticamente, sintetizar y tuitear artículos sobre noticias argentinas de diversas fuentes. Utiliza bibliotecas de Python como Tweepy, BeautifulSoup, Requests y la IA Generativa de Google (API de Gemini) para realizar tareas como sracraping web, gestión de bases de datos, síntesis de texto y tuiteo.
 
 ## Características
 
-- Scraping de Noticias: El bot puede extraer artículos de periódicos online como 'La Política Online', 'Ámbito Financiero' y 'Página 12'.
+- Scraping de Noticias: El bot puede extraer artículos de periódicos online como 'La Política Online', 'Ámbito', 'El Destape', 'Infobae', 'La Izquierda Diario' y 'Página 12'. Diseño modular que permite agregar medios de comunicación de manera sencilla.
 - Gestión de Bases de Datos: Utiliza SQLite para almacenar y gestionar los artículos extraídos.
 - Síntesis de Texto: Emplea la API de GenerativeAI de Google para resumir los artículos de noticias.
-- Publicación Automatizada en Twitter: Publica tweets con resúmenes y enlaces a los artículos originales.
+- Publicación Automatizada en Twitter: Publica tweets con mensajes relevantes y enlaces a los artículos originales.
 Operación Continua: Configurado para publicar tweets de manera automática en intervalos regulares.
 
 ## Instalación

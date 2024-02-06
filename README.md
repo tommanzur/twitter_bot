@@ -31,7 +31,7 @@ Las dependencias incluyen requests, bs4, tweepy y google-generativeai.
 Para ejecutar el script, utiliza el siguiente comando, donde ```NUM_TWEETS``` es la cantidad de tweets que deseas publicar e ```INTERVALO``` es el tiempo entre la publicación de cada tweet. Por ejemplo, para publicar 10 tweets, el comando sería:
 
 ```bash
-NUM_TWEETS=10 INTERVALO=15 python twitter_bot.py
+NUM_TWEETS=10 INTERVALO=15 python twitter_bot.py --publish
 ```
 Si no se especifica ```NUM_TWEETS```, el script utilizará un valor predeterminado de 5 tweets.
 Si no se especifica ```INTERVALO```, el script utilizará un valor predeterminado de 10 segundos.
@@ -49,19 +49,22 @@ crontab -e
 ```
 Esto abrirá el archivo crontab en tu editor de texto predeterminado.
 Agregar una Nueva Tarea Cron: Agrega una línea al final del archivo crontab siguiendo la sintaxis de cron. Por ejemplo, para ejecutar el script cada hora, puedes agregar:
+
 ```cron
-0 * * * * /usr/bin/python /ruta/a/tu/script/twitter_bot.py
+0 * * * * NUM_TWEETS=10 INTERVALO=15 /usr/bin/python /ruta/a/tu/script/twitter_bot.py --publish
 ```
 Asegúrate de reemplazar /usr/bin/python con la ruta completa a tu intérprete de Python y /ruta/a/tu/script/twitter_bot.py con la ruta completa al script twitter_bot.py.
 Establecer la Variable de Entorno: Si deseas especificar un número de tweets diferente al valor predeterminado, puedes agregar la variable NUM_TWEETS directamente en la entrada de cron:
+
 ```cron
-0 * * * * NUM_TWEETS=10 /usr/bin/python /ruta/a/tu/script/twitter_bot.py
+0 * * * * NUM_TWEETS=10 /usr/bin/python /ruta/a/tu/script/twitter_bot.py  --publish
 ```
 Esto ejecutará el script cada hora y publicará 10 tweets en cada ejecución.
 Guardar y Salir: Guarda los cambios y cierra el editor. cron se actualizará automáticamente con la nueva tarea.
 
 ### Verificación
 Verificar Tareas de Cron: Para verificar que tu tarea se ha añadido correctamente, ejecuta:
+
 ```bash
 crontab -l
 ```

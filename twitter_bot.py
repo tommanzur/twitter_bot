@@ -1,6 +1,7 @@
 import os
 import random
 import time
+import argparse
 from utils.text_synthesizer import TextSynthesizer
 from utils.twitter_client import TwitterClient
 from utils.news_database import NewsDatabase
@@ -66,8 +67,9 @@ class NewsManager:
             self.post_random_tweet()
             time.sleep(intervals)
 
-    def run(self):
+    def run_publish(self, num_tweets):
         """Main method to run the news manager"""
+
         print("Creando base de datos...")
         self.news_db.create_table()
         print("Base de datos creada.")
@@ -77,14 +79,23 @@ class NewsManager:
         print("Nuevos artículos procesados.")
 
         print("Posteando nuevos tweets...")
-        num_tweets = int(os.getenv('NUM_TWEETS', 5))
         self.post_multiple_tweets(num_tweets)
 
         print("Eliminando base de datos...")
         self.news_db.delete_database()
-        print("Base de datos eliminada. Proceso completado.")
+        print("Base de datos eliminada. Proceso de publicación completado.")
+
 
 if __name__ == "__main__":
-    manager = NewsManager()
-    manager.run()
+    parser = argparse.ArgumentParser(description="Twitter Bot para publicar noticias y más")
+    parser.add_argument('--publish', action='store_true', help='Publica nuevos tweets')
+    parser.add_argument('--follow_new_users', action='store_true', help='Sigue a nuevos usuarios')
+    args = parser.parse_args()
 
+    manager = NewsManager()
+
+    if args.publish:
+        num_tweets = int(os.getenv('NUM_TWEETS', 5))
+        manager.run_publish(num_tweets)
+    elif args.follow_new_users:
+        pass
